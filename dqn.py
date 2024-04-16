@@ -77,6 +77,8 @@ class DQNAgent(agents.QlearningAgent):
         return
     
     def store_transition(self, state, reward,action, terminal, state_):
+        if not terminal:
+            pass
         index = self.memoryCounter % self.memory_size
         self.state_memory[index] = state
         self.new_state_memory[index] = state_
