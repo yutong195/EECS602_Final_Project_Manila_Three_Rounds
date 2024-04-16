@@ -70,7 +70,7 @@ class DQNAgent(agents.QlearningAgent):
                                          dtype=np.float32)
         self.action_memory = np.zeros(self.memory_size, dtype=np.int32)
         self.reward_memory = np.zeros(self.memory_size, dtype=np.float32)
-        self.terminal_memory = np.zeros(self.memory_size, dtype=np.bool)
+        self.terminal_memory = np.zeros(self.memory_size, dtype=np.bool_)
 
     def set_train_flag(self, flag):
         self.train_flag = flag
