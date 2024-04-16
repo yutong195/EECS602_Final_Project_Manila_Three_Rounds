@@ -28,7 +28,7 @@ def main(args):
         player1 = dqn.DQNAgent("Player1", 30, None, g)
         player2 = dqn.DQNAgent("Player2", 30, None, g)
         player3 = dqn.DQNAgent("Player3", 30, None, g)
-    player1.set_factor(0.2)
+    player1.set_factor(0.3)
     player2.set_factor(1)
     player3.set_factor(1.8)
     # add human players to the game
@@ -60,15 +60,41 @@ def main(args):
         g.add_player(player_ls)
         t_end = time.time()
         print('Epoch {:02d} | Time: {:.4f}'.format(epoch+1, t_end-t_start))
-    print(  'Player1 winrate: {:.2f}%'.format(player1.winrate/args.epoch*100),
-            'Player2 winrate: {:.2f}%'.format(player2.winrate/args.epoch*100),
-            'Player3 winrate: {:.2f}%'.format(player3.winrate/args.epoch*100), sep='\t')
+    print(  'Player1 train winrate: {:.2f}%'.format(player1.winrate/args.epoch*100),
+            'Player2 train winrate: {:.2f}%'.format(player2.winrate/args.epoch*100),
+            'Player3 train winrate: {:.2f}%'.format(player3.winrate/args.epoch*100), sep='\t')
+    
     
     # plot loss for DQN agents
     if args.mode == "DQN":
         loss1 = player1.loss_ls
         loss2 = player2.loss_ls
         loss3 = player3.loss_ls
+
+        player1.set_train_flag(False)
+        player2.set_train_flag(False)
+        player3.set_train_flag(False)
+        wins = [0] * 3
+        player_ls = [player1, player2, player3]
+        g = game.Game(args.verbose)
+        g.add_player(player_ls)
+        for epoch in range(args.epoch//2):
+            g.start()
+            if args.verbose:
+                print("Player1's final money:", int(player_ls[0].money))
+                print("Player2's final money:", int(player_ls[1].money))
+                print("Player3's final money:", int(player_ls[2].money))
+            money_ls = [player_ls[0].money, player_ls[1].money, player_ls[2].money]
+            wins[money_ls.index(max(money_ls))] += 1
+            g = game.Game(args.verbose)
+            for player in player_ls:
+                player.next_game(g)
+            g.add_player(player_ls)
+        print(  'Player1 eval winrate: {:.2f}%'.format(wins[0]/args.epoch*200),
+            'Player2 eval winrate: {:.2f}%'.format(wins[1]/args.epoch*200),
+            'Player3 eval winrate: {:.2f}%'.format(wins[2]/args.epoch*200), sep='\t')
+
+
         plt.figure(figsize=(24,9))
         plt.subplot(131)
         plt.plot(np.arange(len(loss1)),loss1)
