@@ -70,7 +70,7 @@ class DQNAgent(agents.QlearningAgent):
                                          dtype=np.float32)
         self.action_memory = np.zeros(self.memory_size, dtype=np.int32)
         self.reward_memory = np.zeros(self.memory_size, dtype=np.float32)
-        self.terminal_memory = np.zeros(self.memory_size, dtype=np.bool_)
+        self.terminal_memory = np.zeros(self.memory_size, dtype=np.bool)
 
     def set_train_flag(self, flag):
         self.train_flag = flag
@@ -157,14 +157,18 @@ class DQNAgent(agents.QlearningAgent):
         nextState = self.get_state()
         self.store_transition(state,reward,action_idx,0.0,nextState)
         if self.train_flag:
-            self.learn() #update network
-        # soft update the target network
-        
-        target_state_dict = self.target_net.state_dict()
-        net_state_dict = self.policy_network.state_dict()
-        for key in net_state_dict:
-            target_state_dict[key] = net_state_dict[key] * self.tau + target_state_dict[key] * (1-self.tau)
-        self.target_net.load_state_dict(target_state_dict)
+            self.learn()
+        # Increment update_count every time my_turn is called
+        self.update_count += 1
+
+        # Check if it's time to update the target network
+        if self.update_count % self.update_target_every == 0:
+            # Soft update the target network
+            target_state_dict = self.target_net.state_dict()
+            net_state_dict = self.policy_network.state_dict()
+            for key in net_state_dict:
+                target_state_dict[key] = net_state_dict[key] * self.tau + target_state_dict[key] * (1 - self.tau)
+            self.target_net.load_state_dict(target_state_dict)
         return
     
     def saveWeights(self, filepath):
