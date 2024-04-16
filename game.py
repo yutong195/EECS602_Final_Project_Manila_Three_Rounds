@@ -108,7 +108,7 @@ class Game():
             shipyard.get_investors()[0].profit(shipyard.get_payback())
                 
     def get_state(self):
-        raise NotImplementedError()
+        pass
     
     def start(self):
         while self.current_round <= self.round_num:

@@ -28,7 +28,7 @@ def main(args):
         player1 = dqn.DQNAgent("Player1", 30, None, g)
         player2 = dqn.DQNAgent("Player2", 30, None, g)
         player3 = dqn.DQNAgent("Player3", 30, None, g)
-    player1.set_factor(0.3)
+    player1.set_factor(0.2)
     player2.set_factor(1)
     player3.set_factor(1.8)
     # add human players to the game
@@ -47,7 +47,7 @@ def main(args):
     print('------ Training ------')
     for epoch in range(args.epoch):
         t_start = time.time()
-        g.start() # play the whole game
+        g.start()
         if args.verbose:
             print("Player1's final money:", int(player_ls[0].money))
             print("Player2's final money:", int(player_ls[1].money))
