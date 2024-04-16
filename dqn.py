@@ -35,8 +35,11 @@ class DeepQNetwork(nn.Module):
         return actions
     
 class DQNAgent(agents.QlearningAgent):
-    def __init__(self, name, money, color, game, gamma=0.9, epsilon=1.0, lr=0.001, input_dims=16, batch_size=30, n_actions = 10, max_memory=100000, eps_min=0.05, eps_step=5e-4, tau=0.005):
-        super().__init__(name,money,color,game)
+    def __init__(self, name, money, color, game, gamma=0.9, epsilon=0.2, lr=0.001, input_dims=16, batch_size=30, n_actions = 10, max_memory=100000, eps_min=0.05, eps_step=5e-4, tau=0.005, update_target_every=100):
+        super().__init__(name, money, color, game)
+        # Other initializations remain the same...
+        self.update_target_every = update_target_every  # New parameter
+        self.update_count = 0  # Counter for target network updates
         self.gamma = gamma
         self.epsilon = epsilon
         self.eps_min = eps_min
