@@ -67,7 +67,7 @@ class DQNAgent(agents.QlearningAgent):
                                          dtype=np.float32)
         self.action_memory = np.zeros(self.memory_size, dtype=np.int32)
         self.reward_memory = np.zeros(self.memory_size, dtype=np.float32)
-        self.terminal_memory = np.zeros(self.memory_size, dtype=np.bool)
+        self.terminal_memory = np.zeros(self.memory_size, dtype=np.bool_)
 
     def set_train_flag(self, flag):
         self.train_flag = flag
@@ -154,8 +154,9 @@ class DQNAgent(agents.QlearningAgent):
         nextState = self.get_state()
         self.store_transition(state,reward,action_idx,0.0,nextState)
         if self.train_flag:
-            self.learn()
+            self.learn() #update network
         # soft update the target network
+        
         target_state_dict = self.target_net.state_dict()
         net_state_dict = self.policy_network.state_dict()
         for key in net_state_dict:

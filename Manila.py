@@ -47,7 +47,7 @@ def main(args):
     print('------ Training ------')
     for epoch in range(args.epoch):
         t_start = time.time()
-        g.start()
+        g.start() # play the whole game
         if args.verbose:
             print("Player1's final money:", int(player_ls[0].money))
             print("Player2's final money:", int(player_ls[1].money))
