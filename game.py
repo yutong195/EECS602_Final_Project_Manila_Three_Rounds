@@ -1,11 +1,4 @@
-'''
-Author: Yutong Ren
-Date: 2022-11-01 13:17:09
-LastEditTime: 2022-11-24 23:42:53
-LastEditors: Tianle Zhu
-Description: In User Settings Edit
-FilePath: \AI_Game_Agent\game.py
-'''
+
 import random
 import play
 import investment

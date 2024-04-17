@@ -1,12 +1,3 @@
-'''
-Author: SeekingAspdelus jz332@duke.edu
-Date: 2022-12-10 02:57:03
-LastEditors: SeekingAspdelus jz332@duke.edu
-LastEditTime: 2022-12-10 03:30:13
-FilePath: \AI_Game_Agent\benchmark_agent.py
-
-Copyright (c) 2022 by SeekingAspdelus jz332@duke.edu, All Rights Reserved. 
-'''
 import numpy as np
 from play import *
 import util

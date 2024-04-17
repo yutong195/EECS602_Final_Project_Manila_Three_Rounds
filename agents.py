@@ -1,10 +1,4 @@
-'''
-Author: Tianle Zhu
-Date: 2022-11-20 17:04:47
-LastEditTime: 2022-12-10 01:52:36
-LastEditors: Tianle Zhu
-FilePath: \AI_Game_Agent\agents.py
-'''
+
 import numpy as np
 from play import *
 import util

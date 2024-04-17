@@ -1,10 +1,4 @@
 '''
-Author: Tianle Zhu
-Date: 2022-10-27 12:07:34
-LastEditTime: 2022-11-24 20:58:18
-LastEditors: Tianle Zhu
-FilePath: \AI_Game_Agent\investment.py
-
 Include all investment obejct in the game Manila
     generic methods:
     -- get_type()

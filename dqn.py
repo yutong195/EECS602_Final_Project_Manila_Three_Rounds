@@ -1,10 +1,4 @@
-'''
-Author: Tianle Zhu
-Date: 2022-11-20 16:56:22
-LastEditTime: 2022-12-16 20:28:03
-LastEditors: Tianle Zhu
-FilePath: \AI_Game_Agent\dqn.py
-'''
+
 import torch as T
 import torch.nn as nn
 import torch.nn.functional as F

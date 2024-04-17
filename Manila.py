@@ -1,12 +1,4 @@
-'''
-Author: SeekingAspdelus jz332@duke.edu
-Date: 2022-12-10 02:57:03
-LastEditors: Tianle Zhu
-LastEditTime: 2022-12-16 20:33:40
-FilePath: \AI_Game_Agent\Manila.py
 
-Copyright (c) 2022 by SeekingAspdelus jz332@duke.edu, All Rights Reserved. 
-'''
 import matplotlib.pyplot as plt
 import numpy as np
     

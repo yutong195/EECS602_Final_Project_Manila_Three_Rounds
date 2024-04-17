@@ -1,10 +1,4 @@
 '''
-Author: SeekingAspdelus jz332@duke.edu
-LastEditors: SeekingAspdelus
-Date: 2022-10-27 12:19:15
-LastEditTime: 2022-12-16 00:02:45
-FilePath: \AI_Game_Agent\play.py
-
 All the method in this file is used to control the player's action.
 method may be called in this file:
     get_behavior()

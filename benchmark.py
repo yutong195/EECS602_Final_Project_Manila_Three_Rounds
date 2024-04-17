@@ -1,10 +1,4 @@
-'''
-Author: SeekingAspdelus jz332@duke.edu
-Date: 2022-12-10 02:25:59
-LastEditors: Tianle Zhu
-LastEditTime: 2022-12-16 20:33:26
-FilePath: \AI_Game_Agent\benchmark.py
-'''
+
 import time
 import argparse
 import game

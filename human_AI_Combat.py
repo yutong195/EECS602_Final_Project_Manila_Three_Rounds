@@ -1,10 +1,4 @@
-'''
-Author: SeekingAspdelus jz332@duke.edu
-Date: 2022-11-24 23:16:37
-LastEditTime: 2022-12-16 00:02:39
-LastEditors: SeekingAspdelus jz332@duke.com
-FilePath: \AI_Game_Agent\human_AI_Combat.py
-'''
+
 import game
 import agents
 import play
