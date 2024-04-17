@@ -54,6 +54,7 @@ class DQNAgent(agents.QlearningAgent):
         self.tau = tau
         self.loss_ls = []
         self.train_flag = True # stop espilon greedy and training if the train_flag is False
+        self.random = False
         
         # initialize q network and taret q network
         self.policy_network = DeepQNetwork(lr, n_actions=n_actions,
@@ -83,6 +84,9 @@ class DQNAgent(agents.QlearningAgent):
         self.train_flag = flag
         return
     
+    def set_random(self, random):
+        self.random = random
+    
     def store_transition(self, state, reward,action, terminal, state_):
         if not terminal:
             reward = 0
@@ -99,11 +103,11 @@ class DQNAgent(agents.QlearningAgent):
         # get available actions from environment
         available_action = self.get_action()
         # check if training or testing
-        if self.train_flag:
+        if self.random:
             randomNumber = np.random.random()
         else:
             randomNumber = 1
-        if randomNumber >= self.epsilon or self.train_flag:
+        if randomNumber >= self.epsilon:
             state = T.tensor(currentState).to(self.policy_network.device)
             actions = self.policy_network.forward(state)
 
