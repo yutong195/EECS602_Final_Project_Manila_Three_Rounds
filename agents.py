@@ -189,26 +189,29 @@ class QlearningAgent(Player):
 
         if action.get_type() == "ship":
             payback = action.get_payback()/(len(action.get_investors())+1)-action.get_cost()
-            reward = payback + self.factor*payback*(3.5*(3-self.game.current_round)+action.get_position()-13)
+            reward = payback
+            # reward = payback + self.factor*payback*(3.5*(3-self.game.current_round)+action.get_position()-13)
 
         elif action.get_type() == "port":
             payback = action.get_payback() - action.get_cost()
-            if(action.name == "Port1"):
-                reward = payback + self.factor*payback*(3.5*(3-self.game.current_round)+ship_pos_max-13)
-            elif(action.name == "Port2"):
-                reward = payback + self.factor*payback*(3.5*(3-self.game.current_round)+ship_pos_mid-13)
-            else:
-                reward = payback + self.factor*payback*(3.5*(3-self.game.current_round)+ship_pos_min-13)
+            reward = payback
+            # if(action.name == "Port1"):
+            #     reward = payback + self.factor*payback*(3.5*(3-self.game.current_round)+ship_pos_max-13)
+            # elif(action.name == "Port2"):
+            #     reward = payback + self.factor*payback*(3.5*(3-self.game.current_round)+ship_pos_mid-13)
+            # else:
+            #     reward = payback + self.factor*payback*(3.5*(3-self.game.current_round)+ship_pos_min-13)
                 
 
         elif action.get_type() == "shipyard":
             payback = action.get_payback() - action.get_cost()
-            if action.name == "Shipyard1":
-                reward = payback - self.factor*payback*(3.5*(3-self.game.current_round)+ship_pos_min-13)
-            elif action.name == "Shipyard2":
-                reward = payback - self.factor*payback*(3.5*(3-self.game.current_round)+ship_pos_mid-13)
-            else:
-                reward = payback - self.factor*payback*(3.5*(3-self.game.current_round)+ship_pos_max-13)
+            reward = payback
+            # if action.name == "Shipyard1":
+            #     reward = payback - self.factor*payback*(3.5*(3-self.game.current_round)+ship_pos_min-13)
+            # elif action.name == "Shipyard2":
+            #     reward = payback - self.factor*payback*(3.5*(3-self.game.current_round)+ship_pos_mid-13)
+            # else:
+            #     reward = payback - self.factor*payback*(3.5*(3-self.game.current_round)+ship_pos_max-13)
         else:
             reward = 0
         

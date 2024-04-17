@@ -36,7 +36,7 @@ class DeepQNetwork(nn.Module):
         return actions
     
 class DQNAgent(agents.QlearningAgent):
-    def __init__(self, name, money, color, game, gamma=0.9, epsilon=0.2, lr=0.001, input_dims=16, batch_size=30, n_actions = 10, max_memory=100000, eps_min=0.05, eps_step=5e-4, tau=0.005, update_target_every=100):
+    def __init__(self, name, money, color, game, gamma=0.9, epsilon=0.2, lr=0.001, input_dims=16, batch_size=30, n_actions = 10, max_memory=100000, eps_min=0.05, eps_step=5e-4, tau=0.005, update_target_every=5):
         super().__init__(name, money, color, game)
         # Other initializations remain the same...
         self.update_target_every = update_target_every  # New parameter
@@ -72,6 +72,12 @@ class DQNAgent(agents.QlearningAgent):
         self.action_memory = np.zeros(self.memory_size, dtype=np.int32)
         self.reward_memory = np.zeros(self.memory_size, dtype=np.float32)
         self.terminal_memory = np.zeros(self.memory_size, dtype=np.bool_)
+
+    def set_gamma(self, gamma):
+        self.gamma = gamma
+    
+    def set_update_target_every(self, update_target_every):
+        self.update_target_every = update_target_every
 
     def set_train_flag(self, flag):
         self.train_flag = flag
