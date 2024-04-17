@@ -29,8 +29,11 @@ def main(args):
         player2 = dqn.DQNAgent("Player2", 30, None, g)
         player3 = dqn.DQNAgent("Player3", 30, None, g)
     player1.set_factor(0.3)
+    player1.set_greedy_factor(1)
     player2.set_factor(1)
+    player2.set_greedy_factor(10)
     player3.set_factor(1.8)
+    player3.set_greedy_factor(0.1)
     # add human players to the game
     if args.AI_num == 0:
         player1 = play.Player("Player1", 30, None, g)
@@ -53,7 +56,19 @@ def main(args):
             print("Player2's final money:", int(player_ls[1].money))
             print("Player3's final money:", int(player_ls[2].money))
         money_ls = [player_ls[0].money, player_ls[1].money, player_ls[2].money]
-        player_ls[money_ls.index(max(money_ls))].winrate += 1
+        win_idx = money_ls.index(max(money_ls))
+        player_ls[win_idx].winrate += 1
+        # terminal round, update the network
+        if player1.train_flag:
+            for idx, player in enumerate(player_ls):
+                last_index = (player.memoryCounter - 1 + player.memory_size) % player.memory_size
+                player.terminal_memory[last_index] = 1
+                if idx == win_idx:
+                    player.reward_memory[last_index] = 1
+                else:
+                    player.reward_memory[last_index] = -1
+                player.learn()
+
         g = game.Game(args.verbose)
         for player in player_ls:
             player.next_game(g)

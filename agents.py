@@ -53,6 +53,7 @@ class QlearningAgent(Player):
     def __init__(self, name, money, color, game):
         super().__init__(name, money, color, game)
         self.qtable = util.Qtable()
+        self.greedy_factor = 1
         self.factor = 0
         self.alpha = 0.7
         self.gamma = 0.5
@@ -80,6 +81,9 @@ class QlearningAgent(Player):
     
     def set_factor(self, factor):
         self.factor = factor
+    
+    def set_greedy_factor(self, factor):
+        self.greedy_factor = factor
     
     def get_qvalue(self,s_a_pair):
         return self.qtable[tuple(s_a_pair)]

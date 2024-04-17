@@ -21,17 +21,17 @@ class Game():
         Args:
             game_num (int): times the game will be executed
         """        
-        ship1 = investment.ship("Ship1", [2,3,4], 24)
-        ship2 = investment.ship("Ship2", [3,4,5], 30)
-        ship3 = investment.ship("Ship3", [1,2,3], 18)
+        ship1 = investment.ship("Ship1", [3,4,5], 25)
+        ship2 = investment.ship("Ship2", [4,5,6], 30)
+        ship3 = investment.ship("Ship3", [2,3,4], 20)
     
-        port1 = investment.port("Port1", 4, 6)
-        port2 = investment.port("Port2", 3, 8)
-        port3 = investment.port("Port3", 2, 15)
+        port1 = investment.port("Port1", 2, 5)
+        port2 = investment.port("Port2", 3, 7)
+        port3 = investment.port("Port3", 4, 10)
 
-        shipyard1 = investment.shipyard("Shipyard1", 4, 6)
-        shipyard2 = investment.shipyard("Shipyard2", 3, 8)
-        shipyard3 = investment.shipyard("Shipyard3", 2, 15)
+        shipyard1 = investment.shipyard("Shipyard1", 2, 5)
+        shipyard2 = investment.shipyard("Shipyard2", 3, 7)
+        shipyard3 = investment.shipyard("Shipyard3", 4, 10)
 
         self.player_ls = []
         self.ship_ls = []

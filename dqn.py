@@ -78,7 +78,7 @@ class DQNAgent(agents.QlearningAgent):
     
     def store_transition(self, state, reward,action, terminal, state_):
         if not terminal:
-            pass
+            reward = 0
         index = self.memoryCounter % self.memory_size
         self.state_memory[index] = state
         self.new_state_memory[index] = state_
@@ -96,14 +96,37 @@ class DQNAgent(agents.QlearningAgent):
             randomNumber = np.random.random()
         else:
             randomNumber = 1
-        if randomNumber >= self.epsilon:
+        if randomNumber >= self.epsilon or self.train_flag:
             state = T.tensor(currentState).to(self.policy_network.device)
             actions = self.policy_network.forward(state)
-            sorted_actions = T.argsort(actions)
-            for action_idx in sorted_actions:
-                action = self.game.action_ls[action_idx.item()]
+
+            action_candidate_list = []
+            idx_candidate_list = []
+
+            actions = actions.detach()
+
+            for action_index, action_value in enumerate(actions):
+                action = self.game.action_ls[action_index]
                 if action in available_action:
-                    return action_idx
+                    idx_candidate_list.append(action_index)
+                    action_candidate_list.append(action_value)
+            
+            if len(action_candidate_list) == 0:
+                raise ValueError("No available action")
+            
+            action_candidate_list = np.array(action_candidate_list)
+            idx_candidate_list = np.array(idx_candidate_list)
+
+            e_values = np.exp(self.greedy_factor * action_candidate_list)  # subtract max for numerical stability
+            e_values = e_values / e_values.sum()
+            action_idx = np.random.choice(idx_candidate_list, p=e_values)
+            return action_idx
+
+            # sorted_actions = T.argsort(actions)
+            # for action_idx in sorted_actions:
+            #     action = self.game.action_ls[action_idx.item()]
+            #     if action in available_action:
+            #         return action_idx
         else:
             action = np.random.choice(available_action)
             action_idx = self.convertAction(action)
@@ -158,8 +181,8 @@ class DQNAgent(agents.QlearningAgent):
             print("{agent_name} invested in {investment_name}".format(agent_name=self.name, investment_name=action.name))
         nextState = self.get_state()
         self.store_transition(state,reward,action_idx,0.0,nextState)
-        if self.train_flag:
-            self.learn()
+        # if self.train_flag:
+        #     self.learn()
         # Increment update_count every time my_turn is called
         self.update_count += 1
 
