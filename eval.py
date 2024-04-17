@@ -24,9 +24,9 @@ def run_test(test_path="dqn_aggressive.pth", agent1="dqn_normal.pth", agent2="dq
     player3.set_factor(1.8)
     player3.set_greedy_factor(0.1)
 
-    player1.loadWeights("dqn_aggressive.pth")
-    player2.loadWeights("dqn_normal.pth")
-    player3.loadWeights("dqn_conservative.pth")
+    player1.loadWeights(test_path)
+    player2.loadWeights(agent1)
+    player3.loadWeights(agent2)
 
     player1.set_train_flag(False)
     player2.set_train_flag(False)
