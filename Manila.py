@@ -15,6 +15,7 @@ import play
 import time
 import agents
 import dqn
+random.seed(42)
 
 def main(args):
     # create a game
@@ -60,8 +61,8 @@ def main(args):
             print("Player2's final money:", int(player_ls[1].money))
             print("Player3's final money:", int(player_ls[2].money))
         money_ls = [player_ls[0].money, player_ls[1].money, player_ls[2].money]
-        win_idx = money_ls.index(max(money_ls))
-        player_ls[win_idx].winrate += 1
+        # win_idx = money_ls.index(max(money_ls))
+        # player_ls[win_idx].winrate += 1
         # terminal round, update the network
         if player1.train_flag:
             for idx, player in enumerate(player_ls):
@@ -82,10 +83,10 @@ def main(args):
             player.next_game(g)
         g.add_player(player_ls)
         t_end = time.time()
-        print('Epoch {:02d} | Time: {:.4f}'.format(epoch+1, t_end-t_start))
-    print(  'Player1 train winrate: {:.2f}%'.format(player1.winrate/args.epoch*100),
-            'Player2 train winrate: {:.2f}%'.format(player2.winrate/args.epoch*100),
-            'Player3 train winrate: {:.2f}%'.format(player3.winrate/args.epoch*100), sep='\t')
+    #     print('Epoch {:02d} | Time: {:.4f}'.format(epoch+1, t_end-t_start))
+    # print(  'Player1 train winrate: {:.2f}%'.format(player1.winrate/args.epoch*100),
+    #         'Player2 train winrate: {:.2f}%'.format(player2.winrate/args.epoch*100),
+    #         'Player3 train winrate: {:.2f}%'.format(player3.winrate/args.epoch*100), sep='\t')
     
     
     # plot loss for DQN agents
@@ -97,25 +98,24 @@ def main(args):
         player1.set_train_flag(False)
         player2.set_train_flag(False)
         player3.set_train_flag(False)
-        wins = [0] * 3
+
         player_ls = [player1, player2, player3]
         g = game.Game(args.verbose)
+        random.shuffle(player_ls)
         g.add_player(player_ls)
         for epoch in range(args.epoch//2):
             g.start()
-            if args.verbose:
-                print("Player1's final money:", int(player_ls[0].money))
-                print("Player2's final money:", int(player_ls[1].money))
-                print("Player3's final money:", int(player_ls[2].money))
             money_ls = [player_ls[0].money, player_ls[1].money, player_ls[2].money]
-            wins[money_ls.index(max(money_ls))] += 1
+            win_idx = money_ls.index(max(money_ls))
+            player_ls[win_idx].winrate += 1
             g = game.Game(args.verbose)
+            random.shuffle(player_ls)
             for player in player_ls:
                 player.next_game(g)
             g.add_player(player_ls)
-        print(  'Player1 eval winrate: {:.2f}%'.format(wins[0]/args.epoch*200),
-            'Player2 eval winrate: {:.2f}%'.format(wins[1]/args.epoch*200),
-            'Player3 eval winrate: {:.2f}%'.format(wins[2]/args.epoch*200), sep='\t')
+        print(  '{} eval winrate: {:.2f}%'.format(player_ls[0].name, player_ls[0].winrate/args.epoch*200),
+            '{} eval winrate: {:.2f}%'.format(player_ls[1].name, player_ls[1].winrate/args.epoch*200),
+            '{} eval winrate: {:.2f}%'.format(player_ls[2].name, player_ls[2].winrate/args.epoch*200), sep='\t')
 
 
         plt.figure(figsize=(24,9))
