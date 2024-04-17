@@ -9,29 +9,38 @@ import random
 random.seed(42)
 
 
-def run_test(test_path="dqn_aggressive.pth", agent1="dqn_normal.pth", agent2="dqn_conservative.pth"):
+def run_test(test_path, agent1, agent2):
     g = game.Game(verbose=False)
     player1 = dqn.DQNAgent("Eval_Player", 30, None, g)
     player2 = dqn.DQNAgent("Player2", 30, None, g)
     player3 = dqn.DQNAgent("Player3", 30, None, g)
-    # aggressive
-    player1.set_factor(0.3)
-    player1.set_greedy_factor(10)
-    # normal
-    player2.set_factor(1)
-    player2.set_greedy_factor(1)
-    # conservative
-    player3.set_factor(1.8)
-    player3.set_greedy_factor(0.1)
 
-    player1.loadWeights("dqn_aggressive.pth")
-    player2.loadWeights("dqn_normal.pth")
-    player3.loadWeights("dqn_conservative.pth")
+    player1.loadWeights(test_path)
+    player2.loadWeights(agent1)
+    player3.loadWeights(agent2)
 
+    params1 = os.path.basename(test_path).strip('.pth').split('_')
+    player1.set_gamma(float(params1[0]))
+    player1.set_update_target_every(float(params1[1]))
+    player1.set_greedy_factor(float(params1[2]))
+    player1.set_random(params1[3]=='True')
+    
+    params2 = os.path.basename(agent1).strip('.pth').split('_')
+    player2.set_gamma(float(params2[0]))
+    player2.set_update_target_every(float(params2[1]))
+    player2.set_greedy_factor(float(params2[2]))
+    player2.set_random(params2[3]=='True')
+
+    params3 = os.path.basename(agent2).strip('.pth').split('_')
+    player3.set_gamma(float(params3[0]))
+    player3.set_update_target_every(float(params3[1]))
+    player3.set_greedy_factor(float(params3[2]))
+    player3.set_random(params3[3]=='True')
+    
     player1.set_train_flag(False)
     player2.set_train_flag(False)
     player3.set_train_flag(False)
-    wins = [0] * 3
+    
     player_ls = [player1, player2, player3]
     random.shuffle(player_ls)
     g.add_player(player_ls)
@@ -66,14 +75,16 @@ def sample_files(directory, sample_size=2):
 
 # Usage example
 directory_path = 'Players'
-test_player = "dqn_conservative.pth"
+test_player = "0.1_1_0.1_False.pth"
 
 win_rate_list = []
 
 for i in range(20):
     sampled_files = sample_files(directory_path)
     print(sampled_files)
-    win_rate = run_test(test_path=test_player, agent1=sampled_files[0], agent2=sampled_files[1])
+    win_rate = run_test(test_path=os.path.join(directory_path, test_player), 
+                        agent1=os.path.join(directory_path, sampled_files[0]), 
+                        agent2=os.path.join(directory_path, sampled_files[1]))
     win_rate_list.append(win_rate)
 
 print(win_rate_list)

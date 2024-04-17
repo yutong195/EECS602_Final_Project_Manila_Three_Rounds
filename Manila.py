@@ -29,18 +29,25 @@ def main(args):
         player1 = dqn.DQNAgent("Player1", 30, None, g)
         player2 = dqn.DQNAgent("Player2", 30, None, g)
         player3 = dqn.DQNAgent("Player3", 30, None, g)
-        player1.set_gamma(0.1)
-        player1.set_update_target_every(1)
-        player1.set_greedy_factor(0.1)
-        player1.set_random(True)
-        player2.set_gamma(0.5)
-        player2.set_update_target_every(10)
-        player2.set_greedy_factor(1)
-        player2.set_random(True)
-        player3.set_gamma(0.99)
-        player3.set_update_target_every(100)
-        player3.set_greedy_factor(10)
-        player3.set_random(True)
+
+        # CHANGE THE HYPERPARAMETERS HERE
+        gamma = 0.99
+        update_target_every = 1
+        greedy_factor = 0.1
+        random_ = False
+
+        player1.set_gamma(gamma)
+        player1.set_update_target_every(update_target_every)
+        player1.set_greedy_factor(greedy_factor)
+        player1.set_random(random_)
+        player2.set_gamma(gamma)
+        player2.set_update_target_every(update_target_every)
+        player2.set_greedy_factor(greedy_factor)
+        player2.set_random(random_)
+        player3.set_gamma(gamma)
+        player3.set_update_target_every(update_target_every)
+        player3.set_greedy_factor(greedy_factor)
+        player3.set_random(random_)
     # add human players to the game
     if args.AI_num == 0:
         player1 = play.Player("Player1", 30, None, g)
@@ -144,9 +151,12 @@ def main(args):
         player3.saveQtable("qtable_conservative.json")
     elif args.mode == 'DQN':
         print('------ Saving DQN------')
-        player1.saveWeights("dqn_aggressive.pth")
-        player2.saveWeights("dqn_normal.pth")
-        player3.saveWeights("dqn_conservative.pth")
+        player1_filename = '_'.join([str(player1.gamma), str(player1.update_target_every), str(player1.greedy_factor), str(player1.random)])
+        player2_filename = '_'.join([str(player2.gamma), str(player2.update_target_every), str(player2.greedy_factor), str(player2.random)])
+        player3_filename = '_'.join([str(player3.gamma), str(player3.update_target_every), str(player3.greedy_factor), str(player3.random)])
+        player1.saveWeights(player1_filename+".pth")
+        player2.saveWeights(player2_filename+".pth")
+        player3.saveWeights(player3_filename+".pth")
     
 
 if __name__ == '__main__':
