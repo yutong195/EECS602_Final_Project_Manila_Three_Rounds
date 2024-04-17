@@ -8,3 +8,5 @@ test.py
 
 # alphazero
 alphazero framework/
+
+.DS_Store
