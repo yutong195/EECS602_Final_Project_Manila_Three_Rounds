@@ -8,10 +8,13 @@ g = game.Game(verbose=False)
 player1 = dqn.DQNAgent("Player1", 30, None, g)
 player2 = dqn.DQNAgent("Player2", 30, None, g)
 player3 = dqn.DQNAgent("Player3", 30, None, g)
+# aggressive
 player1.set_factor(0.3)
 player1.set_greedy_factor(10)
+# normal
 player2.set_factor(1)
 player2.set_greedy_factor(1)
+# conservative
 player3.set_factor(1.8)
 player3.set_greedy_factor(0.1)
 

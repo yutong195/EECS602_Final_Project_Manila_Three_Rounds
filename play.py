@@ -30,7 +30,6 @@ class Player():
         return f'{self.name} has {self.money} Peso, his/her color is {self.color}'
 
     def get_behavior(self):
-        #What you have done in this game
         return self.behavior
 
     def get_name(self):
