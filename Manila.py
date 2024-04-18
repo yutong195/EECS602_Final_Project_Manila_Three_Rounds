@@ -32,7 +32,7 @@ def main(args):
 
         # CHANGE THE HYPERPARAMETERS HERE
         gamma = 0.99
-        update_target_every = 1
+        update_target_every = 10
         greedy_factor = 0.1
         random_ = False
 
