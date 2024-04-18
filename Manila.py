@@ -31,7 +31,7 @@ def main(args):
         player3 = dqn.DQNAgent("Player3", 30, None, g)
 
         # CHANGE THE HYPERPARAMETERS HERE
-        gamma = 0.99
+        gamma = 0.5
         update_target_every = 10
         greedy_factor = 0.1
         random_ = False
