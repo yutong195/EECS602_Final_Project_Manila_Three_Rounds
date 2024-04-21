@@ -75,14 +75,14 @@ def sample_files(directory, sample_size=2):
 
 # Usage example
 directory_path = 'Players'
-test_player = "0.1_1_0.1_False.pth"
+test_player = "Players1/0.5_10_10_False.pth"
 
 win_rate_list = []
 
 for i in range(20):
     sampled_files = sample_files(directory_path)
     print(sampled_files)
-    win_rate = run_test(test_path=os.path.join(directory_path, test_player), 
+    win_rate = run_test(test_path=test_player, 
                         agent1=os.path.join(directory_path, sampled_files[0]), 
                         agent2=os.path.join(directory_path, sampled_files[1]))
     win_rate_list.append(win_rate)
